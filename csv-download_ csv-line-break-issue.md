@@ -31,7 +31,7 @@
 submitInfoFOTA（原本只做了 MDN 处理，补充换行兼容）：
 
 // 改前
-const lines = numbers.split('\r\n');
+'const lines = numbers.split('\r\n');'
 
 // 改后
 const lines = numbers.split(/\r\n|\r/);
