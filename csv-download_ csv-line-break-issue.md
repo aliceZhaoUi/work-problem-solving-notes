@@ -57,7 +57,7 @@ let csvContent = numbers.split(/\r\n|\r/).join('\r\n');
 - 原始 numbers： index 10 = 13，后一个 = 55（'7'）→ 纯 CR
 - 处理后 csvContent： index 10 = 13，后一个 = 10（\n）→ 已转为 CRLF
 
-##具体检测方法：
+## 具体检测方法：
 换行符在计算机里就是特定的数字（ASCII码）：
 
 | 字符 | charCode | 含义 |
@@ -75,11 +75,12 @@ let csvContent = numbers.split(/\r\n|\r/).join('\r\n');
 - 10 前面不是 13 → 纯 \n（LF）
 
 具体检测代码：
+```text
 if (code === 13 || code === 10) {
     console.log(`index ${i}: ${code}, 前一个: ${numbers.charCodeAt(i-1)}, 后一个: ${numbers.charCodeAt(i+1)}`);
     break;
 }
-
+```
 
 ## 总结
 
