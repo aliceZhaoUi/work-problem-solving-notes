@@ -90,3 +90,80 @@ if (code === 13 || code === 10) {
 - charCodeAt() 是检测换行符的可靠方式
 - 处理用户上传文件时，应在前端统一标准化换行符，不能假设用户文件的格式
 - 正则 /\r\n|\r|\n/ 可兼容所有三种换行符格式（CRLF / CR / LF）
+
+
+## 改后代码
+### submitInfo
+
+```js
+function submitInfo() {
+    if (activePrePost === 'FOTA') {
+        submitInfoFOTA();
+    } else if (activePrePost === 'SU') {
+        submitInfoSU();
+    }
+}
+function submitInfoFOTA() {
+    let numbers = '';
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+    const timestamp = new Date().getTime();
+    let file_name = file.name.slice(0, 25);
+    let table_name = generateTimestampedFileName(file_name, timestamp);
+
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        numbers = event.target.result;
+        let table_name_submitInfo = table_name;
+        // let csvContent = numbers;
+        const lines = numbers.split(/\r\n|\r/);
+        lines.forEach((line, index) => {
+            lines[index] = PseudoMDNHelper.toDisplay(line);
+        });
+        let csvContent = lines.join('\r\n');
+
+        $("#loading").show();
+        $.post("/5GHome/FOTA/uploadCustomRequest", {
+            ...
+        }, function (data, status) {
+            ...
+        });
+    };
+
+    reader.readAsText(file);
+    numbers = numbers.slice(0, -1);
+}
+function submitInfoSU() {
+    let startDate = new Date($("#topdayStart").val());
+    let endDate = new Date($("#topdayEnd").val());
+    let compareResult = startDate <= endDate;
+
+    if (!compareResult) {
+        alert('Pre SU Date cannot be later than Post SU Date. Please check it again.');
+    } else {
+        let numbers = '';
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];
+        const timestamp = new Date().getTime();
+        let file_name = file.name.slice(0, 25);
+        let table_name = generateTimestampedFileName(file_name, timestamp);
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            numbers = event.target.result;
+            let table_name_submitInfo = table_name;
+            let csvContent = numbers.split(/\r\n|\r/).join('\r\n');
+
+            $("#loading").show();
+            $.post("/5GHome/uploadCustomRequest", {
+                ...
+            }, function (data, status) {
+                ...
+            });
+        };
+
+        reader.readAsText(file);
+        numbers = numbers.slice(0, -1);
+    }
+}
+```
