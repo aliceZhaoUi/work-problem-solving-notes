@@ -50,8 +50,9 @@ submitInfoSU（原本直接传原始内容，补充标准化）：
 ## 调试过程
 
 | 方法 | 结论 |
-| includes('\r\n') | 不可靠，\r\n 本身包含 \r 和 \n，三个都返回 true 并不能区分格式 |
-| charCodeAt() | 可靠，直接检查原始字节，13=\r，10=\n，看前后组合确认格式 |
+|---|---|
+| `includes('\r\n')` | 不可靠，`\r\n` 本身包含 `\r` 和 `\n`，三个都返回 `true` 并不能区分格式 |
+| `charCodeAt()` | 可靠，直接检查原始字节，13=`\r`，10=`\n`，看前后组合确认格式 |
 
 最终通过 charCodeAt 确认：
 - 原始 numbers： index 10 = 13，后一个 = 55（'7'）→ 纯 CR
@@ -61,8 +62,9 @@ submitInfoSU（原本直接传原始内容，补充标准化）：
 换行符在计算机里就是特定的数字（ASCII码）：
 
 | 字符 | charCode | 含义 |
-| \r | 13 | Carriage Return |
-| \n | 10 | Line Feed |
+|---|---:|---|
+| `\r` | 13 | Carriage Return |
+| `\n` | 10 | Line Feed |
 
 所以代码做的事情是：
 
