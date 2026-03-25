@@ -93,7 +93,6 @@ if (code === 13 || code === 10) {
 
 
 ## 改后代码
-### submitInfo
 
 ```js
 function submitInfo() {
