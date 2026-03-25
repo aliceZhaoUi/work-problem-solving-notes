@@ -31,18 +31,18 @@
 submitInfoFOTA（原本只做了 MDN 处理，补充换行兼容）：
 
 // 改前
-'const lines = numbers.split('\r\n');'
+`const lines = numbers.split('\r\n');`
 
 // 改后
-const lines = numbers.split(/\r\n|\r/);
+`const lines = numbers.split(/\r\n|\r/);`
 
 submitInfoSU（原本直接传原始内容，补充标准化）：
 
 // 改前
-let csvContent = numbers;
+`let csvContent = numbers;`
 
 // 改后
-let csvContent = numbers.split(/\r\n|\r/).join('\r\n');
+`let csvContent = numbers.split(/\r\n|\r/).join('\r\n');`
 
 正则 /\r\n|\r/ 的关键点： \r\n 写在左边优先匹配，不会把 CRLF 拆成两个空行。
 
